@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب أسعار المنتجات بالعملة المحلية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .exchange-rate {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>حساب أسعار المنتجات بالعملة المحلية</h1>
+
+        <div class="exchange-rate">
+            <label for="usdRate">سعر صرف الدولار (مقابل العملة المحلية):</label>
+            <input type="number" id="usdRate" value="30.5" min="0">
+        </div>
+
+        <table id="products">
+            <thead>
+                <tr>
+                    <th>المنتج (UC)</th>
+                    <th>السعر بالدولار</th>
+                    <th>السعر بالعملة المحلية</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>60 UC</td>
+                    <td class="usd-price">0.86</td>
+                    <td class="local-price">0.00</td>
+                </tr>
+                <tr>
+                    <td>325 UC</td>
+                    <td class="usd-price">4.3</td>
+                    <td class="local-price">0.00</td>
+                </tr>
+                <tr>
+                    <td>660 UC</td>
+                    <td class="usd-price">8.6</td>
+                    <td class="local-price">0.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button id="copyButton">نسخ المنتجات والأسعار</button>
+    </div>
+
+    <script>
+        const usdRateInput = document.getElementById('usdRate');
+        const usdPrices = document.querySelectorAll('.usd-price');
+        const localPrices = document.querySelectorAll('.local-price');
+        const copyButton = document.getElementById('copyButton');
+
+        function calculateLocalPrices() {
+            const usdRate = parseFloat(usdRateInput.value) || 0;
+
+            usdPrices.forEach((usdPrice, index) => {
+                const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
+                const localPrice = usdRate * usdPriceValue;
+                localPrices[index].textContent = localPrice.toFixed(2);
+            });
+        }
+
+        usdRateInput.addEventListener('input', calculateLocalPrices);
+
+        // حساب الأسعار الأولية عند تحميل الصفحة
+        calculateLocalPrices();
+
+        // وظيفة نسخ المنتجات والأسعار
+        copyButton.addEventListener('click', () => {
+            let textToCopy = '';
+            const productRows = document.querySelectorAll('#products tbody tr');
+
+            productRows.forEach(row => {
+                const productName = row.querySelector('td:nth-child(1)').textContent;
+                const localPrice = row.querySelector('.local-price').textContent;
+                textToCopy += `${productName}: ${localPrice}\n`;
+            });
+
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    alert('تم نسخ المنتجات والأسعار إلى الحافظة!');
+                })
+                .catch(err => {
+                    console.error('فشل في نسخ النص: ', err);
+                    alert('فشل في نسخ المنتجات والأسعار.');
+                });
+        });
+    </script>
+</body>
+</html>
