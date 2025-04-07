@@ -8,7 +8,7 @@ function calculateLocalPrices() {
     usdPrices.forEach((usdPrice, index) => {
         const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
         const localPrice = usdRate * usdPriceValue;
-        localPrices[index].textContent = localPrice.toFixed(2);
+        localPrices[index].textContent = localPrice.toFixed();
     });
 }
 
