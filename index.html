@@ -99,32 +99,32 @@
                 </tr>
                <tr>
                     <td>تصريح مستوى 💸</td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">1.30</td>
                     <td class="local-price">0.00</td>
                 </tr>
                <tr>
                     <td>عضوية أسبوعية💸</td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">2.5</td>
                     <td class="local-price">0.00</td>
                 </tr>
                <tr>
                     <td>عضوية شهرية 💸</td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">12</td>
                     <td class="local-price">0.00</td>
                 </tr>
                <tr>
                     <td>انزال جوي 0.99$ </td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">1.5</td>
                     <td class="local-price">0.00</td>
                 </tr>
                <tr>
                     <td>انزال جوي 1.99$</td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">2.5</td>
                     <td class="local-price">0.00</td>
                 </tr>
                <tr>
                     <td>تصريح مستوى 0.99$</td>
-                    <td class="usd-price">8.6</td>
+                    <td class="usd-price">1.5</td>
                     <td class="local-price">0.00</td>
                 </tr>
             </tbody>
@@ -145,7 +145,7 @@
             usdPrices.forEach((usdPrice, index) => {
                 const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
                 const localPrice = usdRate * usdPriceValue;
-                localPrices[index].textContent = localPrice.toFixed(2);
+                localPrices[index].textContent = localPrice.toFixed();
             });
         }
 
