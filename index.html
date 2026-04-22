@@ -3,93 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حساب أسعار المنتجات بالعملة المحلية</title>
+    <title>لوحة تحكم أسعار تيك توك - زولنا</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>حساب أسعار المنتجات بالعملة المحلية</h1>
+        <h1>إعداد قائمة أسعار TikTok 🎯</h1>
+
+        <div class="store-info">
+            <div class="input-group">
+                <label>اسم المتجر:</label>
+                <input type="text" id="storeName" value="متجر زولنا">
+            </div>
+            <div class="input-group">
+                <label>رابط القناة:</label>
+                <input type="text" id="channelLink" value="https://t.me/your_channel">
+            </div>
+            <div class="input-group">
+                <label>رقم الواتساب:</label>
+                <input type="text" id="phoneNum" value="+249900003156">
+            </div>
+        </div>
+
+        <hr>
 
         <div class="exchange-rate">
-            <label for="usdRate">سعر صرف الدولار (مقابل العملة المحلية):</label>
-            <input type="number" id="usdRate" value="30.5" min="0">
+            <label for="usdRate">سعر صرف الجنيه مقابل الدولار:</label>
+            <input type="number" id="usdRate" value="4140" min="0">
         </div>
 
         <table id="products">
             <thead>
                 <tr>
-                    <th>المنتج (UC)</th>
-                    <th>السعر بالدولار</th>
-                    <th>السعر بالعملة المحلية</th>
+                    <th>العملات</th>
+                    <th>السعر ($)</th>
+                    <th>السعر (SDG)</th>
                 </tr>
             </thead>
             <tbody> 
-                <tr>
-                    <td>110💎</td>
-                    <td class="usd-price">0.96</td>
-                    <td class="local-price">0.00</td>
+                <tr class="category" data-name="🎯 عروض خاصة">
+                    <td>140 عملة</td>
+                    <td class="usd-price">1.88</td>
+                    <td class="local-price">0</td>
                 </tr>
                 <tr>
-                    <td>221💎</td>
-                    <td class="usd-price">1.92</td>
-                    <td class="local-price">0.00</td>
+                    <td>280 عملة</td>
+                    <td class="usd-price">3.77</td>
+                    <td class="local-price">0</td>
                 </tr>
                 <tr>
-                    <td>572💎 </td>
-                    <td class="usd-price">4.8</td>
-                    <td class="local-price">0.00</td>
+                    <td>360 عملة</td>
+                    <td class="usd-price">4.83</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>1,166💎 </td>
-                    <td class="usd-price">9.6</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>500 عملة</td>
+                    <td class="usd-price">6.76</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>2,398💎</td>
-                    <td class="usd-price">19.2</td>
-                    <td class="local-price">0.00</td>
+                <tr class="category" data-name="🔥 باقات مميزة">
+                    <td>1,000 عملة</td>
+                    <td class="usd-price">11.84</td>
+                    <td class="local-price">0</td>
                 </tr>
-              
-          
-        
-                 <tr>
-                    <td>تصريح مستوى 💸</td>
-                    <td class="usd-price">1.5</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>2,000 عملة</td>
+                    <td class="usd-price">23.67</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>عضوية أسبوعية💸 </td>
-                    <td class="usd-price">2.5</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>3,000 عملة</td>
+                    <td class="usd-price">35.51</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>عضوية شهرية 💸</td>
-                    <td class="usd-price">12.5</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>5,000 عملة</td>
+                    <td class="usd-price">59.18</td>
+                    <td class="local-price">0</td>
                 </tr>
- 
-                 <tr>
-                    <td>انزال جوي 0.99$ </td>
-                    <td class="usd-price">1.5</td>
-                    <td class="local-price">0.00</td>
+                <tr class="category" data-name="🚀 كميات ضخمة">
+                    <td>10,000 عملة</td>
+                    <td class="usd-price">113.53</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>انزال جوي 1.99$ </td>
-                    <td class="usd-price">2.6</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>20,000 عملة</td>
+                    <td class="usd-price">227.05</td>
+                    <td class="local-price">0</td>
                 </tr>
-                 <tr>
-                    <td>تصريح مستوى 0.99$</td>
-                    <td class="usd-price">8.6</td>
-                    <td class="local-price">0.00</td>
+                <tr>
+                    <td>30,000 عملة</td>
+                    <td class="usd-price">338.16</td>
+                    <td class="local-price">0</td>
                 </tr>
-              
             </tbody>
         </table>
 
-        <button id="copyButton" class="copy-button">نسخ النتائج</button>
+        <button id="copyButton" class="copy-button">نسخ القائمة للواتساب ✨</button>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
