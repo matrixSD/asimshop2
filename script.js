@@ -10,21 +10,20 @@ function calculateLocalPrices() {
         const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
         let rawPrice = usdRate * usdPriceValue;
 
-        // --- منطق التقريب الاحترافي ---
-        // سنقوم بتقريب السعر لأقرب 500 ج لضمان اختفاء الكسور (5, 7, 21، إلخ)
-        // إذا كان السعر 21,005 سيصبح 21,000
-        // إذا كان السعر 940,668 سيصبح 940,500 أو 941,000 حسب الأقرب
-        let roundedPrice = Math.round(rawPrice / 500) * 500;
+        // --- الجبر الصارم للكسور ---
+        // نستخدم Math.floor بدلاً من round لضمان عدم زيادة أي جنيه واحد فوق الرقم المقفول
+        // التقريب هنا لأقرب 500 جنيه لأسفل
+        let roundedPrice = Math.floor(rawPrice / 500) * 500;
 
-        // تحديث النص بفاصلة الآلاف وبدون أي فواصل عشرية
-        localPrices[index].textContent = Math.floor(roundedPrice).toLocaleString();
+        // تحديث العرض في الجدول بفاصلة الآلاف وبدون كسور نهائياً
+        localPrices[index].textContent = roundedPrice.toLocaleString();
     });
 }
 
 usdRateInput.addEventListener('input', calculateLocalPrices);
 calculateLocalPrices();
 
-// وظيفة النسخ المنسق (تدمج البيانات وتزيل الكسور تماماً)
+// وظيفة النسخ (تأخذ السعر المقفل من الجدول مباشرة)
 copyButton.addEventListener('click', () => {
     const storeName = document.getElementById('storeName').value;
     const siteUrl = document.getElementById('channelLink').value;
@@ -45,7 +44,6 @@ copyButton.addEventListener('click', () => {
         } else {
             const qty = row.querySelector('td:nth-child(1)').textContent;
             const price = row.querySelector('.local-price').textContent;
-            // التأكد من أن السعر المنسوخ نصي بدون أي إضافات
             textToCopy += `🔹 ${qty} = ${price}ج\n`;
         }
     });
@@ -56,6 +54,6 @@ copyButton.addEventListener('click', () => {
     textToCopy += `🌐 الموقع: ${siteUrl}`;
 
     navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('✅ تم نسخ القائمة بأرقام صحيحة وبدون كسور!');
+        alert('✅ تم النسخ بنجاح! جميع الأسعار الآن أرقام مقفولة بدون فكة.');
     });
 });
