@@ -9,32 +9,40 @@ function calculateLocalPrices() {
     usdPrices.forEach((usdPrice, index) => {
         const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
         const localPrice = usdRate * usdPriceValue;
-        localPrices[index].textContent = localPrice.toFixed();
+        // تقريب لأقرب 100 لتسهيل الأرقام للعميل
+        localPrices[index].textContent = Math.round(localPrice).toLocaleString();
     });
 }
 
 usdRateInput.addEventListener('input', calculateLocalPrices);
-
-// حساب الأسعار الأولية عند تحميل الصفحة
 calculateLocalPrices();
 
-// وظيفة نسخ النتائج
 copyButton.addEventListener('click', () => {
-    let textToCopy = '';
-    const productRows = document.querySelectorAll('#products tbody tr');
+    const sName = document.getElementById('storeName').value;
+    const sLink = document.getElementById('channelLink').value;
+    const sPhone = document.getElementById('phoneNum').value;
 
-    productRows.forEach(row => {
+    let textToCopy = `🎯 أسعار شحن عملات TikTok - ${sName} 🎯\n`;
+    textToCopy += `⏱️ شحن فوري ولحظي — بدون انتظار!\n`;
+    textToCopy += `✅ آمن 100% — عبر الآيدي (ID) فقط\n`;
+    textToCopy += `💰 عروض خاصة — أسعار حصرية! 💰\n\n`;
+
+    const rows = document.querySelectorAll('#products tbody tr');
+    
+    rows.forEach(row => {
+        if(row.classList.contains('category')) {
+            textToCopy += `\n--- ${row.getAttribute('data-name')} — وفّر أكثر! ---\n`;
+        }
+        
         const productName = row.querySelector('td:nth-child(1)').textContent;
         const localPrice = row.querySelector('.local-price').textContent;
-        textToCopy += `${productName}: ${localPrice}\n`;
+        textToCopy += `🔹 ${productName} — ${localPrice} جنيه\n`;
     });
 
-    navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-            alert('تم نسخ النتائج إلى الحافظة!');
-        })
-        .catch(err => {
-            console.error('فشل في نسخ النص: ', err);
-            alert('فشل في نسخ النتائج.');
-        });
+    textToCopy += `\n🔗 رابط القناة: ${sLink}`;
+    textToCopy += `\n📞 للطلب والشحن الفوري:\n📱 واتساب: ${sPhone}`;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('تم تجهيز القائمة ونسخها بنجاح! ✅');
+    });
 });
