@@ -5,16 +5,24 @@ const copyButton = document.getElementById('copyButton');
 
 function calculateLocalPrices() {
     const usdRate = parseFloat(usdRateInput.value) || 0;
+
     usdPrices.forEach((usdPrice, index) => {
         const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
-        const localPrice = usdRate * usdPriceValue;
-        localPrices[index].textContent = Math.round(localPrice).toLocaleString();
+        let rawPrice = usdRate * usdPriceValue;
+
+        // --- منطق جبر الكسور لأقرب 500 ---
+        // نقسم على 500، نقرب لأقرب رقم صحيح، ثم نضرب في 500 مرة أخرى
+        let roundedPrice = Math.round(rawPrice / 500) * 500;
+
+        // تحديث النص في الجدول بفاصلة الآلاف
+        localPrices[index].textContent = roundedPrice.toLocaleString();
     });
 }
 
 usdRateInput.addEventListener('input', calculateLocalPrices);
 calculateLocalPrices();
 
+// دالة النسخ (تبقى كما هي في الكود السابق لضمان التنسيق الكيوت)
 copyButton.addEventListener('click', () => {
     const storeName = document.getElementById('storeName').value;
     const siteUrl = document.getElementById('channelLink').value;
@@ -45,6 +53,6 @@ copyButton.addEventListener('click', () => {
     textToCopy += `🌐 الموقع: ${siteUrl}`;
 
     navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('تم نسخ اللستة المنسقة بنجاح! ✅');
+        alert('تم نسخ اللستة المنسقة (مع جبر الكسور) بنجاح! ✅');
     });
 });
