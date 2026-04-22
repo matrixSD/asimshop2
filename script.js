@@ -3,64 +3,48 @@ const usdPrices = document.querySelectorAll('.usd-price');
 const localPrices = document.querySelectorAll('.local-price');
 const copyButton = document.getElementById('copyButton');
 
-// دالة حساب الأسعار المحلية بناءً على سعر الصرف
 function calculateLocalPrices() {
     const usdRate = parseFloat(usdRateInput.value) || 0;
-
     usdPrices.forEach((usdPrice, index) => {
         const usdPriceValue = parseFloat(usdPrice.textContent) || 0;
         const localPrice = usdRate * usdPriceValue;
-        // التقريب وتنسيق الرقم بفاصلة الآلاف
         localPrices[index].textContent = Math.round(localPrice).toLocaleString();
     });
 }
 
 usdRateInput.addEventListener('input', calculateLocalPrices);
-calculateLocalPrices(); // الحساب عند التشغيل
+calculateLocalPrices();
 
-// وظيفة النسخ المطور لدمج الحقول وتشكيل القائمة
 copyButton.addEventListener('click', () => {
-    // جلب القيم الحالية من الحقول العلوية
-    const storeName = document.getElementById('storeName').value || "متجر زولنا";
-    const channelLink = document.getElementById('channelLink').value || "";
-    const phoneNum = document.getElementById('phoneNum').value || "";
+    const storeName = document.getElementById('storeName').value;
+    const siteUrl = document.getElementById('channelLink').value;
+    const phone = document.getElementById('phoneNum').value;
 
-    // بداية بناء النص المنسق
-    let textToCopy = `🎯 أسعار شحن عملات TikTok - ${storeName} 🎯\n`;
-    textToCopy += `⏱️ شحن فوري ولحظي — بدون انتظار!\n`;
-    textToCopy += `✅ آمن 100% — عبر الآيدي (ID) فقط\n`;
-    textToCopy += `💰 عروض خاصة — أسعار حصرية! 💰\n`;
+    let textToCopy = `🎯🎯 أسعار شحن عملات TikTok (${storeName}) 🎯🎯\n`;
+    textToCopy += `⏱ شحن فوري\n`;
+    textToCopy += `✅ آمن 100%\n`;
+    textToCopy += `💎 بدون بريد ولا كلمة سر\n`;
+    textToCopy += `🔗 الشحن عبر رابط تسجيل الدخول فقط\n`;
+    textToCopy += `اقل كمية 200 عملة ✅\n`;
 
     const rows = document.querySelectorAll('#products tbody tr');
     
     rows.forEach(row => {
-        // التحقق مما إذا كان السطر يمثل "فئة" (العناوين الفرعية)
         if(row.classList.contains('category')) {
-            const categoryName = row.getAttribute('data-name');
-            textToCopy += `\n--- ${categoryName} — وفّر أكثر! ---\n`;
+            textToCopy += `\n${row.getAttribute('data-name')}:\n`;
+        } else {
+            const qty = row.querySelector('td:nth-child(1)').textContent;
+            const price = row.querySelector('.local-price').textContent;
+            textToCopy += `🔹 ${qty} = ${price}ج\n`;
         }
-        
-        const productName = row.querySelector('td:nth-child(1)').textContent;
-        const localPrice = row.querySelector('.local-price').textContent;
-        
-        // إضافة المنتجات تحت كل فئة
-        textToCopy += `🔹 ${productName} — ${localPrice} جنيه\n`;
     });
 
-    // إضافة التذييل (الرابط والرقم)
-    textToCopy += `\n🔥\n`;
-    if(channelLink) {
-        textToCopy += `🔗 رابط القناة: ${channelLink}\n`;
-    }
-    textToCopy += `📞 للطلب والشحن الفوري:\n📱 واتساب: ${phoneNum}`;
+    textToCopy += `\n🔸 6000 عملة وفوق → العملة بـ 47ج\n`;
+    textToCopy += `\n🔄 السعر بيتغير حسب سعر الصرف\n`;
+    textToCopy += `📞 واتساب: ${phone}\n`;
+    textToCopy += `🌐 الموقع: ${siteUrl}`;
 
-    // تنفيذ عملية النسخ للحافظة
-    navigator.clipboard.writeText(textToCopy)
-        .then(() => {
-            alert('✅ تم نسخ القائمة بنجاح! جاهزة للإرسال على واتساب.');
-        })
-        .catch(err => {
-            console.error('فشل في النسخ: ', err);
-            alert('❌ حدث خطأ أثناء النسخ.');
-        });
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert('تم نسخ اللستة المنسقة بنجاح! ✅');
+    });
 });
